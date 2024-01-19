@@ -28,10 +28,18 @@ async function run() {
     const reviewsCollection = client
       .db("employee_management")
       .collection("reviews");
+    const blogCollection = client.db("employee_management").collection("blog");
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
       res.send(result);
     });
+
+    // blog
+    app.get("/blog", async (req, res) => {
+      const result = await blogCollection.find().toArray();
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
