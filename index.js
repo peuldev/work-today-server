@@ -28,7 +28,12 @@ async function run() {
     const reviewsCollection = client
       .db("employee_management")
       .collection("reviews");
+
     const blogCollection = client.db("employee_management").collection("blog");
+    const worksheetCollection = client
+      .db("employee_management")
+      .collection("work_sheet");
+
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
       res.send(result);
@@ -37,6 +42,12 @@ async function run() {
     // blog
     app.get("/blog", async (req, res) => {
       const result = await blogCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.post("/work-sheet", async (req, res) => {
+      const work = req.body;
+      const result = await worksheetCollection.insertOne(work);
       res.send(result);
     });
 
