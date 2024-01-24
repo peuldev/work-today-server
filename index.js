@@ -29,11 +29,15 @@ async function run() {
       .db("employee_management")
       .collection("reviews");
 
-    const blogCollection = client.db("employee_management").collection("blog");
     const worksheetCollection = client
       .db("employee_management")
       .collection("work_sheet");
 
+    const blogCollection = client.db("employee_management").collection("blog");
+
+    const userCollection = client.db("employee_management").collection("user");
+
+    // reviews
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
       res.send(result);
@@ -45,9 +49,17 @@ async function run() {
       res.send(result);
     });
 
+    // work-sheet api
     app.post("/work-sheet", async (req, res) => {
       const work = req.body;
       const result = await worksheetCollection.insertOne(work);
+      res.send(result);
+    });
+
+    // user api
+    app.post("/user", async (req, res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
       res.send(result);
     });
 
