@@ -56,6 +56,12 @@ async function run() {
       res.send(result);
     });
 
+    // get work-sheet
+    app.get("/work-sheet", async (req, res) => {
+      const result = await worksheetCollection.find().toArray();
+      res.send(result);
+    });
+
     // user api
     app.post("/user", async (req, res) => {
       const user = req.body;
