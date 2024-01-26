@@ -85,6 +85,9 @@ async function run() {
         $set: {
           status: updateUser.status,
         },
+        $set: {
+          status: updateUser.status,
+        },
       };
       const result = await userCollection.updateOne(filter, updateDoc);
       res.send(result);
