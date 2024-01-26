@@ -75,6 +75,20 @@ async function run() {
       const result = await userCollection.deleteOne(query);
       res.send(result);
     });
+
+    // update fire
+    app.patch("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateUser = req.body;
+      const updateDoc = {
+        $set: {
+          status: updateUser.status,
+        },
+      };
+      const result = await userCollection.updateOne(filter, updateDoc);
+      res.send(result);
+    });
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
