@@ -1,9 +1,9 @@
 const express = require("express");
-const app = express();
-var cors = require("cors");
-var jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+var cors = require("cors");
 require("dotenv").config();
+var jwt = require("jsonwebtoken");
+const app = express();
 const port = process.env.PORT || 5000;
 
 //use middleware
@@ -42,9 +42,9 @@ async function run() {
     app.post("/jwt", async (req, res) => {
       const user = req.body;
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "1h",
+        expiresIn: "1hr",
       });
-      res.send(token);
+      res.send({ token });
     });
 
     // reviews
