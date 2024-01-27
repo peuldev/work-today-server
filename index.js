@@ -47,6 +47,43 @@ async function run() {
       res.send({ token });
     });
 
+    // middlewares
+    const verifyToken = (req, res, next) => {
+      console.log("inside verify token", req.headers.authorization);
+      if (!req.headers.authorization) {
+        return res.status(401).send({ message: "forbidden access" });
+      }
+      const token = req.headers.authorization.split(" ")[1];
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+          return res.status(401).send({ message: "forbidden access" });
+        }
+        req.decoded = decoded;
+        next();
+      });
+    };
+
+    // all user get
+    app.get("/user", verifyToken, async (req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    });
+
+    // user api
+    app.post("/user", async (req, res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // deleted user
+    app.delete("/user/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // reviews
     app.get("/reviews", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
@@ -69,26 +106,6 @@ async function run() {
     // get work-sheet
     app.get("/work-sheet", async (req, res) => {
       const result = await worksheetCollection.find().toArray();
-      res.send(result);
-    });
-
-    // user api
-    app.post("/user", async (req, res) => {
-      const user = req.body;
-      const result = await userCollection.insertOne(user);
-      res.send(result);
-    });
-    // all user get
-    app.get("/user", async (req, res) => {
-      const result = await userCollection.find().toArray();
-      res.send(result);
-    });
-
-    // deleted user
-    app.delete("/user/:id", async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) };
-      const result = await userCollection.deleteOne(query);
       res.send(result);
     });
 
