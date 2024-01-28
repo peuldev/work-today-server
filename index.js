@@ -79,7 +79,12 @@ async function run() {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
-
+    app.get("/employee", async (req, res) => {
+      const result = await userCollection
+        .find({ designation: "employee" })
+        .toArray();
+      res.send(result);
+    });
     app.get("/user/admin/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
       if (email !== req.decoded.email) {
