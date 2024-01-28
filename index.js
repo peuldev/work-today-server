@@ -79,10 +79,18 @@ async function run() {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
+
     app.get("/employee", async (req, res) => {
       const result = await userCollection
         .find({ designation: "employee" })
         .toArray();
+      res.send(result);
+    });
+
+    app.get("/employee/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.findOne(query);
       res.send(result);
     });
     app.patch("/employee/:id", async (req, res) => {
