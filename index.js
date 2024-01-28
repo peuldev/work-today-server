@@ -96,9 +96,6 @@ async function run() {
 
     app.get("/user/hr/:email", async (req, res) => {
       const email = req.params.email;
-      if (email !== req.decoded.email) {
-        return res.status(403).send({ message: "forbidden access" });
-      }
       const query = { email: email };
       const user = await userCollection.findOne(query);
       let hr = false;
@@ -175,7 +172,7 @@ async function run() {
     });
 
     // make hr
-    app.patch("/user/hr/:id", verifyToken, async (req, res) => {
+    app.patch("/user/hr/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
