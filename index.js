@@ -9,13 +9,13 @@ const port = process.env.PORT || 5000;
 //use middleware
 app.use(cors());
 app.use(express.json());
-console.log(process.env.SECRET_NAME);
-console.log(process.env.SECRET_KEY);
-console.log(process.env.ACCESS_TOKEN_SECRET);
-// const uri = `mongodb+srv://${process.env.SECRET_NAME}:${process.env.SECRET_KEY}@cluster0.fhewpy9.mongodb.net/?retryWrites=true&w=majority`;
+// console.log(process.env.SECRET_NAME);
+// console.log(process.env.SECRET_KEY);
+// console.log(process.env.ACCESS_TOKEN_SECRET);
+const uri = `mongodb+srv://${process.env.SECRET_NAME}:${process.env.SECRET_KEY}@cluster0.fhewpy9.mongodb.net/?retryWrites=true&w=majority`;
 // console.log(uri);
-const uri =
-  "mongodb+srv://employee-menagement:1234566@cluster0.fhewpy9.mongodb.net/?retryWrites=true&w=majority";
+// const uri =
+//   "mongodb+srv://employee-menagement:1234566@cluster0.fhewpy9.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -214,9 +214,9 @@ async function run() {
     });
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
-    // console.log(
-    //   "Pinged your deployment. You successfully connected to MongoDB!"
-    // );
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
